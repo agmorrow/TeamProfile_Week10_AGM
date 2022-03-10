@@ -1,99 +1,85 @@
-function createHTML(teamMembers) {
-    return `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Team Profile Generator</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="./assets/style.css">
-    </head>
-    <body>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 jumbotron text-glow mb-3">
-                    <h1 class="text-center">The Dream Team</h1>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="main-section col-12 d-flex justify-content-center">
-                    ${createTeam(team)}
-                </div>
-            </div>
-        </div>
-    </body>
-    </html>
+// Generate the HTML texts for the HTML output file.
+// Returns an array holding strings of HTML texts.
+module.exports = {
+    generateHtml( team ) {
+       // Array to hold HTML text strings.
+       const holdHtmlArr = [];
+ 
+       const htmlHeaderAndTitleBar = `
+ <!DOCTYPE html>
+ <html lang = "en">
+ <head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width = device-width, initial scale = 1.0">
+    <meta http-equiv = "X-UA-Compatible" content = "ie = edge">
+    <title>${team[0]}</title>
+    <link rel = "stylesheet" href = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel = "preconnect" href = "https://fonts.gstatic.com">
+    <link href = "https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Spartan&display=swap" rel = "stylesheet">
+    <link rel = "stylesheet" href = "../src/styles.css">
+ </head>
+ <body>
+    <div class = "title-bar">
+       <h1>${team[0]}</h1>
+    </div>
+    <div class = "card-container">
     `;
-};
-
-function createTeam(team) {
-        function createManager(manager) {
-            return `
-            <div class = "card employee-card manager-card">
-                <div class = "card-header text-center">
-                    <h2 class = "card-title">${manager.getName()}</h2>
-                    <h4 class = "card-title">Role: ${manager.getRole()}</h4>
-                </div>
-                <div class = "card-body">
-                    <ul class = "list-group">
-                        <li class = "list-group-item">ID: ${manager.getId()}</li>
-                        <li class = "list-group-item">Email: <a href="mailto: ${manager.getEmail()}">${manager.getEmail()}</a></li>
-                        <li class = "list-group-item">Phone Number: <a href = "tel: ${manager.getOfficeNumber()}">${manager.getOfficeNumber()}</a></li>
-                    </ul>
-                </div>
-            </div>
-        `;};
-        function createEngineer(engineer) {
-            return `
-            <div class = "card employee-card engineer-card">
-                <div class = "card-header text-center">
-                    <h2 class = "card-title">${engineer.getName()}</h2>
-                    <h4 class = "card-title">Role: ${engineer.getRole()}</h4>
-                </div>
-                <div class = "card-body">
-                    <ul class = "list-group">
-                        <li class = "list-group-item">ID: ${engineer.getId()}</li>
-                        <li class = "list-group-item">Email: <a href="mailto: ${engineer.getEmail()}">${engineer.getEmail()}</a></li>
-                        <li class = "list-group-item">GitHub: <a href = "https://github.com/${engineer.getGitHub()}">${engineer.getGitHub()}</a></li>
-                    </ul>
-                </div>
-            </div>
-        `;};
-        function createIntern(intern) {
-            return `
-            <div class = "card employee-card intern-card">
-                <div class = "card-header text-center">
-                    <h2 class = "card-title">${intern.getName()}</h2>
-                    <h4 class = "card-title">Role: ${intern.getRole()}</h4>
-                </div>
-                <div class = "card-body">
-                    <ul class = "list-group">
-                        <li class = "list-group-item">ID: ${intern.getId()}</li>
-                        <li class = "list-group-item">Email: <a href="mailto: ${intern.getEmail()}">${intern.getEmail()}</a></li>
-                        <li class = "list-group-item">School: ${intern.getSchool()}</li>
-                    </ul>
-                </div>
-            </div>
-        `;};
-        const html = [];
-        html.push(team
-            .filter(employee => employee.getRole() === 'Manager')
-            .map(manager => createManager(manager))
-            );
-        html.push(team
-            .filter(employee => employee.getRole() === 'Engineer')
-            .map(engineer => createEngineer(engineer))
-            .join("")
-            );
-        html.push(team
-            .filter(employee => employee.getRole() === 'Intern')
-            .map(intern => createIntern(intern))
-            .join("")
-            );
-        return html.join("");
-}
-module.exports = createHTML;
+       holdHtmlArr.push( htmlHeaderAndTitleBar );
+ 
+       // Loop through the team array to display the profile for each team member
+       for ( let i = 1; i < team.length; i++ ) {
+          let teamMemberHtml = `
+          <div class = "team-member-card">
+             <div class = "team-member-card-top">
+                <h2>${team[i].name}</h2>
+                `;
+ 
+                // Verify the team member's role to display the appropriate icon
+                if ( team[ i ].role === "Manager" ) {
+                   teamMemberHtml += `<h2 class="bi bi-cup">  ${team[i].role}</h2>`;
+                }
+                else if ( team[ i ].role === "Engineer" ) {
+                   teamMemberHtml += `<h2 class="bi bi-lightbulb">  ${team[i].role}</h2>`;
+                }
+                else if ( team[ i ].role === "Intern" ) {
+                   teamMemberHtml += `<h2 class="bi bi-eyeglasses">  ${team[i].role}</h2>`;
+                };
+ 
+                teamMemberHtml += `
+             </div>
+             <div class = "team-member-card-bottom">
+                <p><b>Employee ID:</b> ${team[i].id}</p>
+                <P><b>Email:</b><br><a href = "mailto:${team[i].email}">${team[i].email}</a></p>
+          `;
+ 
+          // If the team member is the manager, display the office number.
+          if ( team[ i ].officeNumber ) {
+             teamMemberHtml += `<p><b>Office Number:</b><br>${team[ i ].officeNumber}</p>`;
+          }
+          // If the team member is an engineer, display the Github username.
+          else if (team[ i ].githubUsername ) {
+             teamMemberHtml += `<p><b>GitHub:</b><br><a href = "https://github.com/${team[ i ].githubUsername}">${team[ i ].githubUsername}</a></p>`;
+          }
+          // If the team member is an intern, display the intern's school name.
+          else if ( team[ i ].school ) {
+             teamMemberHtml += `<p><b>School:</b><br>${team[ i ].school}</p>`;
+          };
+ 
+          teamMemberHtml += `
+             </div>
+          </div>
+          `;
+          holdHtmlArr.push( teamMemberHtml );
+       };
+ 
+       const htmlFooter = `
+    </div>   
+ </body>
+ </html>
+ `;
+       holdHtmlArr.push ( htmlFooter );
+ 
+       // Return the HTML text strings in the array object.
+       return holdHtmlArr;
+    }
+ };
