@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/agmorrow/TeamProfile_Week10_AGM#readme",
   "dependencies": {
+    "bootstrap-icons": "^1.8.1",
     "inquirer": "^8.2.0"
   },
   "devDependencies": {

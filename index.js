@@ -43,18 +43,20 @@ function createIntern() {
         if (answer !== "") {
           return true;
         }
-        return "Please enter the intern's name.";
+        console.log( "Please enter your intern's name:" );
+         return false;
       }
     },
     {
       type: "input",
       message: "What is your interns ID number?",
-      name: "interId",
+      name: "internId",
       validate: answer => {
-        if (answer !== "") {
+        if (answer && answer.trim().length > 0 ) {
           return true;
         }
-        return "Please enter the intern's ID.";
+        console.log( "Please enter your intern's ID:" );
+         return false;
       }
     },
     {
@@ -65,7 +67,8 @@ function createIntern() {
         if (answer !== "") {
           return true;
         }
-        return "Please enter the intern's entire email address.";
+        console.log( "Please enter your intern's email:" );
+         return false;
       }
     },
     {
@@ -76,7 +79,8 @@ function createIntern() {
         if (answer !== "") {
           return true;
         }
-        return "Please enter the intern's school.";
+        console.log( "Please enter your intern's school:" );
+         return false;
       }
     }
   ])
@@ -103,7 +107,20 @@ function createEngineer() {
         if (answer !== "") {
           return true;
         }
-        return "Please enter the engineer's name.";
+        console.log("Please enter the engineers's name.");
+        return false;
+      }
+    },
+    {
+      type: "input",
+      message: "What is your engineer's ID number?",
+      name: "engineerId",
+      validate: answer => {
+        if (answer && answer.trim().length > 0 ) {
+          return true;
+        }
+        console.log("Please enter the engineers's ID.");
+        return false;
       }
     },
     {
@@ -114,7 +131,8 @@ function createEngineer() {
         if (answer !== "") {
           return true;
         }
-        return "Please enter the engineer's entire email address.";
+        console.log("Please enter the engineers's email.");
+        return false;
       }
     },
     {
@@ -125,7 +143,8 @@ function createEngineer() {
         if (answer !== "") {
           return true;
         }
-        return "Please enter the engineer's github username.";
+        console.log("Please enter the engineers's GitHub username.");
+        return false;
       }
     },
   ])
@@ -178,18 +197,20 @@ function buildTeam() {
             if (answer !== "") {
               return true;
             }
-            return "Please enter the team manager's name.";
+            console.log( "Please enter your manager's employee name:" );
+         return false;
           }
         },
         {
           type: "input",
-          name: "managerID",
+          name: "managerId",
           message: "What is the team manager's Employee ID?",
           validate: answer => {
-            if (answer !== "") {
+            if ( answer && answer.trim().length > 0 ) {
               return true;
             }
-            return "Please enter the team manager's ID.";
+            console.log( "Please enter your manager's employee ID:" );
+         return false;
           }
         },
         {
@@ -200,7 +221,8 @@ function buildTeam() {
             if (answer !== "") {
               return true;
             }
-            return "Please enter the team manager's entire email address.";
+            console.log( "Please enter your manager's employee ID:" );
+         return false;
           }
         },
         {
