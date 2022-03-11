@@ -4,82 +4,81 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
-const holdHtml = require('./src/templateHelper');
+const templateHelper = require('./src/templateHelper');
 
-let team = [];
+let teamRoster = [];
 
-
-const writeToFile = ( holdHtmlArr ) => {
+const writeToFile = ( rosterHTML ) => {
   return new Promise(( resolve, reject ) => {
-    outputFileName = team[ 0 ].toLowerCase();
+    outputFileName = teamRoster[ 0 ].toLowerCase();
     outputFileName = outputFileName.replace( / /g, "-");
 
-    fs.writeFile( `./dist/${outputFileName}.html`, holdHtmlArr.join( "" ), function( err ) {
+    fs.writeFile( `./dist/${outputFileName}.html`, rosterHTML.join( "" ), function( err ) {
       if ( err ) {
         reject( err );
         return;
       };
       resolve({
         ok: true,
-        message: 'File created! Your output HTML file is located in the dist folder.'
+        message: 'File created successfully, found in the dist folder'
       });
     });
   });
 };
 
-
 function generateHtmlFile() {
-  const holdHtmlArr = holdHtml.generateHtml( team );
-  writeToFile( holdHtmlArr );
+  const rosterHTML = templateHelper.generateHtml( teamRoster );
+  writeToFile( rosterHTML );
 };
-
 
 function createIntern() {
   inquirer.prompt([{
       type: "input",
-      message: "What is the name of your intern?",
+      message: "What is the name of the intern you would like to enter?",
       name: "internName",
       validate: answer => {
         if (answer !== "") {
           return true;
         }
-        console.log( "Please enter your intern's name:" );
+        console.log( "Please enter the intern's name:" );
          return false;
       }
     },
     {
       type: "input",
-      message: "What is your interns ID number?",
+      message: "What is this interns employee ID number?",
       name: "internId",
       validate: answer => {
         if (answer && answer.trim().length > 0 ) {
           return true;
         }
-        console.log( "Please enter your intern's ID:" );
+        console.log( "Please enter the intern's ID:" );
          return false;
       }
     },
     {
       type: "input",
-      message: "What is your interns email?",
+      message: "What is this interns email address?",
       name: "internEmail",
-      validate: answer => {
-        if (answer !== "") {
-          return true;
+      validate: function(email) {
+        valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+        if (valid) {
+            return true;
+        } else {
+            console.log(" " + "Please enter a valid email")
+            return false;
         }
-        console.log( "Please enter your intern's email:" );
-         return false;
       }
     },
     {
       type: "input",
-      message: "What is the school your intern attends?",
+      message: "Which school is this intern attending?",
       name: "internSchool",
       validate: answer => {
         if (answer !== "") {
           return true;
         }
-        console.log( "Please enter your intern's school:" );
+        console.log( "Please enter the intern's school:" );
          return false;
       }
     }
@@ -91,17 +90,16 @@ function createIntern() {
     const internSchool = data.internSchool;
     const teamMember = new Intern( internName, internId, internEmail, internSchool);
 
-    team.push(teamMember);
+    teamRoster.push(teamMember);
 
     buildTeam();
   });
 };
 
-
 function createEngineer() {
   inquirer.prompt([{
       type: "input",
-      message: "What is the team engineers's name?",
+      message: "What is the name of the engineer you would like to enter?",
       name: "engineerName",
       validate: answer => {
         if (answer !== "") {
@@ -113,7 +111,7 @@ function createEngineer() {
     },
     {
       type: "input",
-      message: "What is your engineer's ID number?",
+      message: "What is this engineers employee ID number?",
       name: "engineerId",
       validate: answer => {
         if (answer && answer.trim().length > 0 ) {
@@ -125,19 +123,21 @@ function createEngineer() {
     },
     {
       type: "input",
-      message: "What is the engineers email",
+      message: "What is this engineers email address?",
       name: "engineerEmail",
-      validate: answer => {
-        if (answer !== "") {
-          return true;
+      validate: function(email) {
+        valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+        if (valid) {
+            return true;
+        } else {
+            console.log(" " + "Please enter a valid email")
+            return false;
         }
-        console.log("Please enter the engineers's email.");
-        return false;
       }
     },
     {
       type: "input",
-      message: "What is your engineers github username?",
+      message: "What is this engineers github username?",
       name: "engineerGithub",
       validate: answer => {
         if (answer !== "") {
@@ -155,7 +155,7 @@ function createEngineer() {
     const engineerGithub = data.engineerGithub
     const teamMember = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub);
 
-    team.push(teamMember);
+    teamRoster.push(teamMember);
 
     buildTeam();
   });
@@ -167,17 +167,17 @@ function buildTeam() {
     name: "teamBuild" ,
     message: "Would you like to add another member to your team?",
     choices: [
-      "Engineer",
-      "Intern",
+      "Add an engineer",
+      "Add an intern",
       "I'm finished building my team",
     ]
   }])
   .then(function(data) {
     switch (data.teamBuild) {
-      case "Engineer":
+      case "Add an engineer":
         createEngineer();
         break;
-      case "Intern":
+      case "Add an intern":
         createIntern();
         break;
       case "I'm finished building my team":
@@ -192,49 +192,51 @@ function buildTeam() {
       {
           type: "input",
           name: "managerName",
-          message: "What is the team manager's name?",
+          message: "What is the name of the manager you would like to enter?",
           validate: answer => {
             if (answer !== "") {
               return true;
             }
-            console.log( "Please enter your manager's employee name:" );
+            console.log( "Please enter the manager's employee name." );
          return false;
           }
         },
         {
           type: "input",
           name: "managerId",
-          message: "What is the team manager's Employee ID?",
+          message: "What is the managers employee ID number?",
           validate: answer => {
             if ( answer && answer.trim().length > 0 ) {
               return true;
             }
-            console.log( "Please enter your manager's employee ID:" );
+            console.log( "Please enter the manager's employee ID." );
          return false;
           }
         },
         {
           type: "input",
           name: "managerEmail",
-          message: "What is the team manager's email?",
-          validate: answer => {
-            if (answer !== "") {
-              return true;
+          message: "What is the managers email address?",
+          validate: function(email) {
+            valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+            if (valid) {
+                return true;
+            } else {
+                console.log(" " + "Please enter a valid email")
+                return false;
             }
-            console.log( "Please enter your manager's employee ID:" );
-         return false;
           }
         },
         {
           type: "input",
           name: "managerOfficeNumber",
-          message: "What is the team manager's office number?",
+          message: "In which office is the manager located?",
           validate: answer => {
             if ( answer && answer.trim().length > 0 ) {
               return true;
             }
             else {
-              console.log("Please enter the team manager's office number");
+              console.log("Please enter the team manager's office number.");
               return false;
             };
           }
@@ -245,12 +247,10 @@ function buildTeam() {
         const managerEmail = data.managerEmail;
         const managerOfficeNumber = data.managerOfficeNumber
         const teamMember = new Manager(managerName, managerId, managerEmail, managerOfficeNumber);
-          team.push( teamMember);
+          teamRoster.push( teamMember);
           buildTeam();
         });
       };
-
-  
 
 function init() {
   inquirer.prompt([
@@ -270,7 +270,7 @@ function init() {
   ])
   .then( function(data){
     const teamName = data.teamName;
-    team.push( teamName );
+    teamRoster.push( teamName );
     createManager();
   });
 };
