@@ -27,8 +27,8 @@ module.exports = {
       <div class="container">
         <div class="row justify-content-evenly">
 `;
-rosterHTML.push(containerHtml);
-    
+    rosterHTML.push(containerHtml);
+
     // Loop through the teamRoster array to display the profile for each team member
     for (let i = 1; i < teamRoster.length; i++) {
       let teamInfo = `
@@ -88,7 +88,7 @@ rosterHTML.push(containerHtml);
     </div>
     </div>
 `;
- rosterHTML.push(endContainer);
+    rosterHTML.push(endContainer);
     const endHTML = `
         
  </body>
