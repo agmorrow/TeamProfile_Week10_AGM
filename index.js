@@ -258,8 +258,8 @@ function init() {
       type: "input",
       name: "teamName",
       message: "What is the name of your team?",
-      validate: answers => {
-        if (answers && answers.trim().length > 0 ) {
+      validate: answer => {
+        if (answer !== "") {
           return true;
         }
         else {
