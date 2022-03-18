@@ -32,7 +32,7 @@ npm test
 
 ### Walk through video
 
-<a href="https://youtu.be/2d3dGCtHy7o">Walk through video</a>
+<a href="https://youtu.be/2d3dGCtHy7o" target="_blank">Walk through video</a>
 
 ### Screenshots
 
