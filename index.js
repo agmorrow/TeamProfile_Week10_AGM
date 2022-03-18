@@ -154,9 +154,7 @@ function createEngineer() {
       const engineerEmail = data.engineerEmail;
       const engineerGithub = data.engineerGithub
       const teamMember = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub);
-
       teamRoster.push(teamMember);
-
       buildTeam();
     });
 };
@@ -181,6 +179,7 @@ function buildTeam() {
           createIntern();
           break;
         case "I'm finished building my team":
+          console.log('Team Profile located in the dist folder');
           generateHtmlFile();
           break;
       };
