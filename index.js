@@ -25,12 +25,12 @@ const writeToFile = (rosterHTML) => {
     });
   });
 };
-
+// Pushes data to HTML file
 function generateHtmlFile() {
   const rosterHTML = templateHelper.generateHtml(teamRoster);
   writeToFile(rosterHTML);
 };
-
+// Function to creat the Intern
 function createIntern() {
   inquirer.prompt([{
         type: "input",
@@ -95,7 +95,7 @@ function createIntern() {
       buildTeam();
     });
 };
-
+// Function to create the Engineer
 function createEngineer() {
   inquirer.prompt([{
         type: "input",
@@ -158,7 +158,7 @@ function createEngineer() {
       buildTeam();
     });
 };
-
+// Function to build the entire team
 function buildTeam() {
   inquirer.prompt([{
       type: "list",
@@ -185,7 +185,7 @@ function buildTeam() {
       };
     });
 };
-
+// Function to create the manager
 function createManager() {
   inquirer.prompt([{
       type: "input",
@@ -248,7 +248,7 @@ function createManager() {
     buildTeam();
   });
 };
-
+// Initializes prompt to name the team
 function init() {
   inquirer.prompt([{
       type: "input",
