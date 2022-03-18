@@ -31,7 +31,11 @@ npm test
 ## Usage
 
 ### Walk through video
-![Team Profile](https://user-images.githubusercontent.com/82473623/159051183-b1d46442-35a5-47d4-976f-b9cfa98c6933.gif)
+
+https://youtu.be/2d3dGCtHy7o
+
+### Screenshots
+
 <img width="603" alt="Test Pass" src="https://user-images.githubusercontent.com/82473623/159051835-b2b6b4d9-6f01-407e-9d25-5779b3253c13.png">
 <img width="877" alt="Team Denver" src="https://user-images.githubusercontent.com/82473623/159051846-bdef57b7-1e6f-42f9-b880-d4b1e7f61002.png">
 
